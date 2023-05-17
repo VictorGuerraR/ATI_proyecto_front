@@ -1,1 +1,52 @@
-<p>clientes works!</p>
+<p-table [value]="clientes" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Direccion</th>
+      <th>Telefono</th>
+      <th>Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cliente>
+    <tr>
+      <td>{{ cliente.id_cliente}}</td>
+      <td>{{ cliente.nombre }}</td>
+      <td>{{ cliente.direccion }}</td>
+      <td>{{ cliente.telefono }}</td>
+      <span class="p-buttonset">
+        <p-button 
+          icon="pi pi-wrench" 
+          styleClass="p-button-warning" 
+          (onClick)="editar(cliente)"
+        >
+        </p-button>
+        <p-button 
+        icon="pi pi-trash" 
+        styleClass="p-button-danger"
+        (onClick)="eliminar(cliente)"
+        >
+        </p-button>
+      </span>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- DIALOGO DE EDITAR -->
+<p-dialog  
+[(visible)]="editarDialog"
+[style]="{width: '50vw'}"
+position="left"
+>
+
+</p-dialog>
+
+<!-- DIALOGO DE CREAR -->
+<p-dialog  
+[(visible)]="crearDialog"
+[style]="{width: '50vw'}"
+position="left"
+
+>
+
+</p-dialog>

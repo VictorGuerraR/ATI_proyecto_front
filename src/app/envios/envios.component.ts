@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-envios',
+  selector: 'envios',
   templateUrl: './envios.component.html',
   styleUrls: ['./envios.component.css']
 })
 export class EnviosComponent {
+  
+  constructor(){}
 
 }
