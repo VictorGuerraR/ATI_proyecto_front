@@ -13,6 +13,10 @@ import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { SidebarModule } from 'primeng/sidebar';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 
 @NgModule({
@@ -32,6 +36,9 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
+    SidebarModule,
+    ReactiveFormsModule,
+    InputTextModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

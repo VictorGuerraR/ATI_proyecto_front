@@ -1,24 +1,36 @@
-import { Observable } from 'rxjs';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ClientesService } from '../service/clientes/clientes.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css']
 })
-export class ClientesComponent {
-  editarDialog: boolean = false;
-  crearDialog: boolean = false;
 
+export class ClientesComponent implements OnInit {
+  editarDialog: boolean = true;
+  crearDialog: boolean = false;
+  clienteForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private clienteServ: ClientesService,
-  ) { }
+  ) {
+    this.clienteForm = this.fb.group({
+      nombre: ['', Validators.required],
+      direccion: ['', Validators.required],
+      telefono: ['', Validators.required]
+    });
+  }
 
-  editar(params: any) {
+
+  ngOnInit(): void { }
+
+
+  editarD(params: any) {
     this.editarDialog = true;
-    console.log(this.editarDialog, 'editar', params)
+    console.log('editar', params)
   }
 
   eliminar(params: any) {
@@ -27,8 +39,12 @@ export class ClientesComponent {
     this.clienteServ.obtenerClientes()
   }
 
-  crear() {
+  crearD() {
     this.crearDialog = true;
+  }
+
+  submitForm(){
+    console.log(this.clienteForm.value)
   }
 
 
