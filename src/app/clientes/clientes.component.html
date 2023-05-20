@@ -40,7 +40,7 @@
     <div class="flex  justify-content-center card-container">
       <h5>EDITAR </h5>
     </div>
-    <form [formGroup]="clienteForm" (ngSubmit)="submitForm()" class="flex flex-wrap justify-content-center card-container blue-container gap-3">
+    <form [formGroup]="clienteForm" (ngSubmit)="actualizarCliente()" class="flex flex-wrap justify-content-center card-container blue-container gap-3">
       <div class="w-12rem h-4rem">
         <span class="p-float-label">
           <input pInputText id="nombre" formControlName="nombre" />
@@ -71,7 +71,7 @@
     <div class="flex flex justify-content-center card-container">
       <h5>CREAR </h5>
     </div>
-    <form [formGroup]="clienteForm" (ngSubmit)="submitForm()" class="flex flex-wrap justify-content-center card-container blue-container gap-3">
+    <form [formGroup]="clienteForm"  (ngSubmit)="crearCliente()" class="flex flex-wrap justify-content-center card-container blue-container gap-3">
       <div class="w-12rem h-4rem">
         <span class="p-float-label">
           <input pInputText id="nombre" formControlName="nombre" />

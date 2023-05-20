@@ -1,17 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClientesService {
+export class ClientesService implements OnInit, OnChanges {
 
   clientes: Array<any> = [];
 
   constructor(
     private http: HttpClient
   ) {
+    this.obtenerClientes()
+  }
+
+  ngOnInit(): void {
+    this.obtenerClientes()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.obtenerClientes()
   }
   /////---------------------/////
@@ -21,7 +29,6 @@ export class ClientesService {
   async obtenerClientes() {
     try {
       this.clientes = await this.Obclientes().toPromise()
-      console.log(this.clientes)
     } catch (error) { }
   }
 
@@ -33,32 +40,54 @@ export class ClientesService {
   /////---------------------/////
   /////     CREAR
   /////---------------------/////
-  insertarCliente(params: any): Observable<any> {
-    return this.http.get<any>(`http://localhost:3000/equipo/informacionVistaEquipos`,
+  async crearCliente(params: any) {
+    try {
+      this.inCliente(params).subscribe(
+        value => this.obtenerClientes(),
+        error => console.log(' Trono chavos')
+      )
+    } catch (error) {
+
+    }
+  }
+
+  inCliente(params: any): Observable<any> {
+    return this.http.post(`http://localhost:3000/cliente/crearCliente/`,
       { params });
   }
 
+  /////---------------------/////
+  /////     ACTUALIZAR
+  /////---------------------/////
+  async actualizarCliente(params: any) {
+    try {
+      this.acCliente(params).subscribe(
+        value => this.obtenerClientes(),
+        error => console.log(' Trono chavos')
+      );
+    } catch (error) { }
+  }
+
+  acCliente(params: any): Observable<any> {
+    console.log(params)
+    return this.http.patch(`http://localhost:3000/cliente/actualizarCliente/`, { params });
+  }
 
 
   /////---------------------/////
   /////     ELIMINAR
   /////---------------------/////
   async eliminarCliente(params: any) {
-    try { await this.elCliente(params).toPromise() }
+    try {
+      this.elCliente(params).subscribe(
+        value => this.obtenerClientes(),
+        error => console.log(' Trono chavos')
+      );
+    }
     catch (error) { }
   }
 
   elCliente(params: any): Observable<any> {
-    return this.http.delete<any>(`http://localhost:3000/cliente/eliminarCliente/`,
-      { params });
-  }
-
-
-  /////---------------------/////
-  /////     ACTUALIZAR
-  /////---------------------/////
-  actualizarCliente(params: any): Observable<any> {
-    return this.http.get<any>(`http://localhost:3000/equipo/informacionVistaEquipos`,
-      { params });
+    return this.http.delete(`http://localhost:3000/cliente/eliminarCliente/`, { params });
   }
 }

@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 
@@ -39,6 +40,7 @@ import { InputTextModule } from 'primeng/inputtext';
     SidebarModule,
     ReactiveFormsModule,
     InputTextModule,
+    InputNumberModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

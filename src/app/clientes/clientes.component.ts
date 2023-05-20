@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ClientesService } from '../service/clientes/clientes.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -9,9 +9,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 
 export class ClientesComponent implements OnInit {
-  editarDialog: boolean = true;
-  crearDialog: boolean = false;
+  infoCliente: any;
   clienteForm: FormGroup;
+  crearDialog: boolean = false;
+  editarDialog: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -24,30 +25,53 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-
-  ngOnInit(): void { }
+  ngOnInit():void{
+    this.clienteServ.obtenerClientes()
+  }
+  
+  ngOnChanges(changes: SimpleChanges):void{
+    this.clienteServ.obtenerClientes()
+  }
+  
 
 
   editarD(params: any) {
+    this.infoCliente = {...params};
     this.editarDialog = true;
-    console.log('editar', params)
+    this.clienteForm.setValue({
+      nombre: params.nombre,
+      direccion: params.direccion,
+      telefono: params.telefono,
+    })
   }
 
-  eliminar(params: any) {
+  async actualizarCliente(){
+    let values = {...this.clienteForm.value}
+    this.infoCliente.nombre = values.nombre;
+    this.infoCliente.direccion = values.direccion;
+    this.infoCliente.telefono = values.telefono;
+    await this.clienteServ.actualizarCliente(this.infoCliente);
+    this.editarDialog = false;
+
+  }
+
+ async eliminar(params: any) {
     console.log('eliminar', params)
-    this.clienteServ.eliminarCliente(params)
-    this.clienteServ.obtenerClientes()
+    await this.clienteServ.eliminarCliente(params);
   }
 
   crearD() {
     this.crearDialog = true;
   }
 
-  submitForm(){
-    console.log(this.clienteForm.value)
+  async crearCliente(){
+    let values = {...this.clienteForm.value}
+    await this.clienteServ.crearCliente(values)
+    this.crearDialog = false; 
   }
 
 
 
-  get clientes(): Array<any> { return this.clienteServ.clientes }
+
+  get clientes(){console.log('aaaaaaaaa',  this.clienteServ.clientes); return this.clienteServ.clientes;}
 }
