@@ -56,7 +56,6 @@ export class ClientesComponent implements OnInit {
   }
 
  async eliminar(params: any) {
-    console.log('eliminar', params)
     await this.clienteServ.eliminarCliente(params);
   }
 
@@ -70,8 +69,5 @@ export class ClientesComponent implements OnInit {
     this.crearDialog = false; 
   }
 
-
-
-
-  get clientes(){console.log('aaaaaaaaa',  this.clienteServ.clientes); return this.clienteServ.clientes;}
+  get clientes(){return this.clienteServ.clientes}
 }

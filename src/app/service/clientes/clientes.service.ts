@@ -69,7 +69,6 @@ export class ClientesService implements OnInit, OnChanges {
   }
 
   acCliente(params: any): Observable<any> {
-    console.log(params)
     return this.http.patch(`http://localhost:3000/cliente/actualizarCliente/`, { params });
   }
 
