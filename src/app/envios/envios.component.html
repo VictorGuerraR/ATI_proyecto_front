@@ -1,28 +1,73 @@
-<p-table [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="envios" class="col-12" styleClass="p-datatable-gridlines">
   <ng-template pTemplate="header">
       <tr>
-          <th>#</th>
-          <th>Nombre</th>
-          <th>Direccion</th>
-          <th>Telefono</th>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Departamento</th>
-          <th>Fecha envio</th>
-          <th>Costo envio</th>
+          <th class="col-1">
+            <p-button icon="pi pi-plus" styleClass="p-button-outlined" (onClick)="crearD()">
+            </p-button>
+          </th>
+          <th class="col-1">Nombre</th>
+          <th class="col-1">Direccion</th>
+          <th class="col-1">Telefono</th>
+          <th class="col-1">Producto</th>
+          <th class="col-1">Cantidad</th>
+          <th class="col-1">Departamento</th>
+          <th class="col-1">Fecha envio</th>
+          <th class="col-1">Costo envio</th>
+          <th class="col-1">Acciones</th>
       </tr>
   </ng-template>
   <ng-template pTemplate="body" let-envio>
       <tr>
+          <td>{{ envio.id_pedido}}</td>
           <td>{{ envio.nombre_cliente}}</td>
-          <td>{{ envio.direccion_cliente}}</td>
-          <td>{{ envio.telefono_cliente}}</td>
+          <td>{{ envio.direccion}}</td>
+          <td>{{ envio.telefono}}</td>
           <td>{{ envio.nombre_producto}}</td>
-          <td>{{ envio.cantidad_pedido}}</td>
+          <td>{{ envio.cantidad}}</td>
           <td>{{ envio.nombre_departamento}}</td>
-          <td>{{ envio.fecha_envio}}</td>
+          <td>{{ envio.fecha_envio | date:'dd/MM/yyyy'}}</td>
           <td>{{ envio.costo_envio}}</td>
-            <button></button>
+          <span class="p-buttonset">
+            <p-button icon="pi pi-wrench" styleClass="p-button-raised p-button-text p-button-warning"
+              (onClick)="editarD(envio)">
+            </p-button>
+            <p-button icon="pi pi-trash" styleClass="p-button-raised p-button-text p-button-danger"
+              (onClick)="eliminar(envio)">
+            </p-button>
+          </span>
       </tr>
   </ng-template>
 </p-table>
+
+<!-- SIDEBAR DE EDITAR -->
+<p-sidebar [(visible)]="editarDialog" p-sidebar-md position="left">
+    <div class="card">
+      <div class="flex  justify-content-center card-container">
+        <h5>EDITAR </h5>
+      </div>
+      <form [formGroup]="productosForm" (ngSubmit)="actualizarEnvio()"
+        class="flex flex-wrap justify-content-center card-container blue-container gap-3">
+        <div class="w-12rem h-4rem">
+          <span class="p-float-label">
+            <input pInputText id="nombre" formControlName="nombre" />
+            <label htmlFor="nombre">Nombre</label>
+          </span>
+        </div>
+        <div class="w-12rem h-4rem">
+          <span class="p-float-label">
+            <input pInputText id="direccion" formControlName="direccion" />
+            <label htmlFor="direccion">Direccion</label>
+          </span>
+        </div>
+        <div class="w-12rem h-4rem">
+          <span class="p-float-label">
+            <input pInputText id="telefono" formControlName="telefono" />
+            <label htmlFor="telefono">Telefono</label>
+          </span>
+        </div>
+        <div class="w-12rem h-4rem">
+          <button pButton type="submit" [disabled]="productosForm.invalid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </p-sidebar>
