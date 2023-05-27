@@ -17,6 +17,8 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -41,6 +43,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ReactiveFormsModule,
     InputTextModule,
     InputNumberModule,
+    CalendarModule,
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

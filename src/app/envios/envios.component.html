@@ -1,73 +1,198 @@
-<p-table [value]="envios" class="col-12" styleClass="p-datatable-gridlines">
-  <ng-template pTemplate="header">
+<div>
+  <p-table [value]="envios" class="col-12" styleClass="p-datatable-gridlines">
+    <ng-template pTemplate="header">
       <tr>
-          <th class="col-1">
-            <p-button icon="pi pi-plus" styleClass="p-button-outlined" (onClick)="crearD()">
-            </p-button>
-          </th>
-          <th class="col-1">Nombre</th>
-          <th class="col-1">Direccion</th>
-          <th class="col-1">Telefono</th>
-          <th class="col-1">Producto</th>
-          <th class="col-1">Cantidad</th>
-          <th class="col-1">Departamento</th>
-          <th class="col-1">Fecha envio</th>
-          <th class="col-1">Costo envio</th>
-          <th class="col-1">Acciones</th>
+        <th class="col-1">
+          <p-button icon="pi pi-plus" styleClass="p-button-outlined" (onClick)="crearD()">
+          </p-button>
+        </th>
+        <th class="col-1">Nombre</th>
+        <th class="col-1">Direccion</th>
+        <th class="col-1">Telefono</th>
+        <th class="col-1">Producto</th>
+        <th class="col-1">Cantidad</th>
+        <th class="col-1">Departamento</th>
+        <th class="col-1">Fecha envio</th>
+        <th class="col-1">Costo envio</th>
+        <th class="col-1">Acciones</th>
       </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-envio>
+    </ng-template>
+    <ng-template pTemplate="body" let-envio>
       <tr>
-          <td>{{ envio.id_pedido}}</td>
-          <td>{{ envio.nombre_cliente}}</td>
-          <td>{{ envio.direccion}}</td>
-          <td>{{ envio.telefono}}</td>
-          <td>{{ envio.nombre_producto}}</td>
-          <td>{{ envio.cantidad}}</td>
-          <td>{{ envio.nombre_departamento}}</td>
-          <td>{{ envio.fecha_envio | date:'dd/MM/yyyy'}}</td>
-          <td>{{ envio.costo_envio}}</td>
-          <span class="p-buttonset">
-            <p-button icon="pi pi-wrench" styleClass="p-button-raised p-button-text p-button-warning"
-              (onClick)="editarD(envio)">
-            </p-button>
-            <p-button icon="pi pi-trash" styleClass="p-button-raised p-button-text p-button-danger"
-              (onClick)="eliminar(envio)">
-            </p-button>
-          </span>
+        <td>{{ envio.id_pedido}}</td>
+        <td>{{ envio.nombre_cliente}}</td>
+        <td>{{ envio.direccion}}</td>
+        <td>{{ envio.telefono}}</td>
+        <td>{{ envio.nombre_producto}}</td>
+        <td>{{ envio.cantidad}}</td>
+        <td>{{ envio.nombre_departamento}}</td>
+        <td>{{ envio.fecha_envio | date:'dd/MM/yyyy'}}</td>
+        <td>{{ envio.costo_envio}}</td>
+        <span class="p-buttonset">
+          <p-button icon="pi pi-wrench" styleClass="p-button-raised p-button-text p-button-warning"
+            (onClick)="editarD(envio)">
+          </p-button>
+          <p-button icon="pi pi-trash" styleClass="p-button-raised p-button-text p-button-danger"
+            (onClick)="eliminar(envio)">
+          </p-button>
+        </span>
       </tr>
-  </ng-template>
-</p-table>
+    </ng-template>
+  </p-table>
+</div>
 
 <!-- SIDEBAR DE EDITAR -->
-<p-sidebar [(visible)]="editarDialog" p-sidebar-md position="left">
-    <div class="card">
-      <div class="flex  justify-content-center card-container">
-        <h5>EDITAR </h5>
+<p-sidebar [(visible)]="editarDialog" position="left" styleClass="p-sidebar-md">
+  <div class="flex justify-content-center card-container">
+    <h5>EDITAR </h5>
+  </div>
+  <div class="card">
+    <form [formGroup]="productosForm" (ngSubmit)="actualizarEnvio()"
+      class="flex flex-column card-container align-content-center  justify-content-center align-items-center no-gutter col-12 ">
+      <!-- CANTIDAD PRODUCTOS -->
+      <div class="col-12 field w-12rem h-12rem">
+        <span>
+          <label htmlFor="cantidad">Cantidad</label>
+          <p-inputNumber id="cantidad" formControlName="cantidad" [showButtons]="true" buttonLayout="vertical"
+            spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary"
+            incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+            [min]="0" />
+        </span>
       </div>
-      <form [formGroup]="productosForm" (ngSubmit)="actualizarEnvio()"
-        class="flex flex-wrap justify-content-center card-container blue-container gap-3">
-        <div class="w-12rem h-4rem">
-          <span class="p-float-label">
-            <input pInputText id="nombre" formControlName="nombre" />
-            <label htmlFor="nombre">Nombre</label>
-          </span>
-        </div>
-        <div class="w-12rem h-4rem">
-          <span class="p-float-label">
-            <input pInputText id="direccion" formControlName="direccion" />
-            <label htmlFor="direccion">Direccion</label>
-          </span>
-        </div>
-        <div class="w-12rem h-4rem">
-          <span class="p-float-label">
-            <input pInputText id="telefono" formControlName="telefono" />
-            <label htmlFor="telefono">Telefono</label>
-          </span>
-        </div>
-        <div class="w-12rem h-4rem">
-          <button pButton type="submit" [disabled]="productosForm.invalid">Guardar</button>
-        </div>
-      </form>
-    </div>
-  </p-sidebar>
+      <!-- PRECIO UNITARIO -->
+      <div class="col-12 w-12rem h-12rem">
+        <span>
+          <label htmlFor="precio_unitario">Precio Unitario</label>
+          <p-inputNumber id="precio_unitario" formControlName="precio_unitario" [showButtons]="true"
+            buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary"
+            incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+            [min]="0" mode="currency" currency="GTQ" />
+        </span>
+      </div>
+      <!-- COSTO ENVIO -->
+      <div class="col-12 field w-12rem h-12rem">
+        <span>
+          <label htmlFor="costo_envio">Costo Envio</label>
+          <p-inputNumber id="costo_envio" formControlName="costo_envio" [showButtons]="true" buttonLayout="vertical"
+            spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary"
+            incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+            [min]="0" mode="currency" currency="GTQ" />
+        </span>
+      </div>
+      <!-- DEPARTAMENTO ENVIO -->
+      <div class="col-12 field w-12rem h-4rem">
+        <span>
+          <label htmlFor="id_departamento">Departamento Envio </label>
+          <p-dropdown class="w-1rem h-4rem" formControlName="id_departamento" [options]="departamentos"
+            optionLabel="nombre" optionValue="id_departamento"></p-dropdown>
+        </span>
+      </div>
+      <!-- CLIENTE -->
+      <div class="col-12 field w-12rem h-4rem">
+        <span>
+          <label htmlFor="id_cliente">Cliente</label>
+          <p-dropdown id="id_cliente" formControlName="id_cliente" [options]="clientes" optionLabel="nombre"
+            optionValue="id_cliente"></p-dropdown>
+        </span>
+      </div>
+      <!-- PRODUCTOS -->
+      <div class="col-12 field w-12rem h-4rem">
+        <span>
+          <label htmlFor="id_producto">Producto</label>
+          <p-dropdown id="id_producto" formControlName="id_producto" [options]="productos" optionLabel="nombre_producto"
+            optionValue="id_producto"></p-dropdown>
+        </span>
+      </div>
+      <!-- CALENDARIO -->
+      <div class="col-12 field ">
+        <span>
+          <label htmlFor="fecha_envio">Fecha Envio</label>
+          <p-calendar id="fecha_envio" formControlName="fecha_envio" [readonlyInput]="true" [inline]="true">
+          </p-calendar>
+        </span>
+      </div>
+      <div class="col-12 field w-full h-4rem">
+        <button pButton type="submit" [disabled]="productosForm.invalid">Guardar</button>
+      </div>
+    </form>
+  </div>
+</p-sidebar>
+
+
+<!-- SIDEBAR DE CREAR -->
+<p-sidebar [(visible)]="crearDialog" position="left" styleClass="p-sidebar-md">
+  <div class="flex justify-content-center card-container">
+    <h5>CREAR </h5>
+  </div>
+  <div class="card">
+    <form [formGroup]="productosForm" (ngSubmit)="crearEnvio()"
+      class="flex flex-column card-container align-content-center  justify-content-center align-items-center no-gutter col-12 ">
+      <!-- CANTIDAD PRODUCTOS -->
+      <div class="col-12 field w-12rem h-12rem">
+        <span>
+          <label htmlFor="cantidad">Cantidad</label>
+          <p-inputNumber id="cantidad" formControlName="cantidad" [showButtons]="true" buttonLayout="vertical"
+            spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary"
+            incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+            [min]="0" />
+        </span>
+      </div>
+      <!-- PRECIO UNITARIO -->
+      <div class="col-12 w-12rem h-12rem">
+        <span>
+          <label htmlFor="precio_unitario">Precio Unitario</label>
+          <p-inputNumber id="precio_unitario" formControlName="precio_unitario" [showButtons]="true"
+            buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary"
+            incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+            [min]="0" mode="currency" currency="GTQ" />
+        </span>
+      </div>
+      <!-- COSTO ENVIO -->
+      <div class="col-12 field w-12rem h-12rem">
+        <span>
+          <label htmlFor="costo_envio">Costo Envio</label>
+          <p-inputNumber id="costo_envio" formControlName="costo_envio" [showButtons]="true" buttonLayout="vertical"
+            spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary"
+            incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+            [min]="0" mode="currency" currency="GTQ" />
+        </span>
+      </div>
+      <!-- DEPARTAMENTO ENVIO -->
+      <div class="col-12 field w-12rem h-4rem">
+        <span>
+          <label htmlFor="id_departamento">Departamento Envio </label>
+          <p-dropdown class="w-1rem h-4rem" formControlName="id_departamento" [options]="departamentos"
+            optionLabel="nombre" optionValue="id_departamento"></p-dropdown>
+        </span>
+      </div>
+      <!-- CLIENTE -->
+      <div class="col-12 field w-12rem h-4rem">
+        <span>
+          <label htmlFor="id_cliente">Cliente</label>
+          <p-dropdown id="id_cliente" formControlName="id_cliente" [options]="clientes" optionLabel="nombre"
+            optionValue="id_cliente"></p-dropdown>
+        </span>
+      </div>
+      <!-- PRODUCTOS -->
+      <div class="col-12 field w-12rem h-4rem">
+        <span>
+          <label htmlFor="id_producto">Producto</label>
+          <p-dropdown id="id_producto" formControlName="id_producto" [options]="productos" optionLabel="nombre_producto"
+            optionValue="id_producto"></p-dropdown>
+        </span>
+      </div>
+      <!-- CALENDARIO -->
+      <div class="col-12 field ">
+        <span class="col-12 field ">
+          <label htmlFor="fecha_envio">Fecha Envio</label>
+        </span>
+      </div>
+      <p-calendar class="max-w-full" appendTo="body" id="fecha_envio" formControlName="fecha_envio" [readonlyInput]="true" [inline]="true">
+      </p-calendar>
+      <div class="col-12 field w-full h-4rem">
+        <button pButton type="submit" [disabled]="productosForm.invalid">Guardar</button>
+      </div>
+    </form>
+  </div>
+
+</p-sidebar>
